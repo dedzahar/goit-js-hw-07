@@ -1,17 +1,23 @@
+class UserDataStorage {
+    setData(key, value) {
+        this[key] = value;
+    }
+}
 const loginForm = document.querySelector('.login-form');
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const formValues = [];
+    const userData = new UserDataStorage();
     const formInputs = e.target.elements;
     for (const input of formInputs) {
-        if (input.nodeName.toLowerCase() !== 'input') {
+        if (input.nodeName !== 'INPUT') {
             continue;
         } else if (!input.value.trim().length) {
             alert('All form fields must be filled in');
+            return;
         }
-        formValues[input.name] = input.value.trim();
+        userData.setData(input.name, input.value.trim());
     }
     e.target.reset();
 
-    console.log(formValues);
+    console.log(userData);
 })
